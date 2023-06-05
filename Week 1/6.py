@@ -30,10 +30,6 @@ class TreeNode:
         self.left = left
         self.right = right
 
-    def __repr__(self):
-
-
-
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -44,10 +40,13 @@ class Solution:
 
 
 def tree2list(root):
-    if root.val:
+    if not root or not root.val:
         return []
 
-    return [root.val] + tree2list(root.left) + tree2list(root.right)
+    resp1 = tree2list(root.left)
+    resp2 = tree2list(root.right)
+
+    return [root.val] + resp1[:1] + resp2[:1] + resp1[1:] + resp2[1:]
 
 
 def get_slice(level):
@@ -61,6 +60,9 @@ def list2tree(l):
     List to tree
     Level Order Binary Tree Traversal
     """
+    if not l:
+        return None
+
     i = 1
     tree_root = TreeNode(l[0])
     tree_elms = [tree_root]
@@ -102,8 +104,9 @@ class TestCase(unittest.TestCase):
     def test_list2tree(self):
         tree_root = list2tree([4, 2, 7, 1, 3, 6, 9])
 
+        self.assertEqual(tree2list(tree_root), [4, 2, 7, 1, 3, 6, 9])
 
-    def test_isPalindrome(self):
+    def test_invertTree(self):
         sol = Solution()
         test_cases = [
             ([2, 1, 3], [2, 3, 1]),
@@ -111,7 +114,8 @@ class TestCase(unittest.TestCase):
             ([4, 2, 7, 1, 3, 6, 9], [4, 7, 2, 9, 6, 3, 1]),
         ]
         for case in test_cases:
-            self.assertEqual(sol.isPalindrome(case[0]), case[1])
+            response = sol.invertTree(list2tree(case[0]))
+            self.assertEqual(tree2list(response), case[1])
 
 
 if __name__ == '__main__':
