@@ -106,6 +106,22 @@ class TestCase(unittest.TestCase):
 
         self.assertEqual(tree2list(tree_root), [4, 2, 7, 1, 3, 6, 9])
 
+        tree_root = list2tree([4, 1])
+
+        self.assertEqual(tree2list(tree_root), [4, 1])
+
+        tree_root = list2tree([4, 1, 2])
+
+        self.assertEqual(tree2list(tree_root), [4, 1, 2])
+
+        tree_root = list2tree([4])
+
+        self.assertEqual(tree2list(tree_root), [4])
+
+        tree_root = list2tree([])
+
+        self.assertEqual(tree2list(tree_root), [])
+
     def test_invertTree(self):
         sol = Solution()
         test_cases = [
